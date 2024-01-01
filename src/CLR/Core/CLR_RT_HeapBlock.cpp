@@ -1315,6 +1315,19 @@ bool CLR_RT_HeapBlock::ObjectsEqual(
             break;
 
         case DATATYPE_STRING:
+        case DATATYPE_CLASS:
+        case DATATYPE_BOOLEAN:
+        case DATATYPE_CHAR:
+        case DATATYPE_I1:
+        case DATATYPE_U1:
+        case DATATYPE_I2:
+        case DATATYPE_U2:
+        case DATATYPE_I4:
+        case DATATYPE_U4:
+        case DATATYPE_I8:
+        case DATATYPE_U8:
+        case DATATYPE_DATETIME:
+        case DATATYPE_TIMESPAN:
             return Compare_Values(pArgLeft, pArgRight, false) == 0;
             break;
 
@@ -1639,7 +1652,7 @@ CLR_INT32 CLR_RT_HeapBlock::Compare_Values(const CLR_RT_HeapBlock &left, const C
                 // deal with special cases:
                 // return 0 if the numbers are unordered (either or both are NaN)
                 // this is post processed in interpreter so '1' will turn into '0'
-                if (__isnand(left.NumericByRefConst().r4) || __isnand(right.NumericByRefConst().r4))
+                if (__isnand(left.NumericByRefConst().r4) && __isnand(right.NumericByRefConst().r4))
                 {
                     return 1;
                 }
